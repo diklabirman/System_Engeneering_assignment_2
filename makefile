@@ -9,8 +9,8 @@ all: $(TARGETS)
 	$(CC) $(CFLAGS) -c $<
 
 
-connections: my_mat.o main.o my_mat.h
-	$(CC) -rcs connections $^
+connections: my_mat.o main.o
+	$(CC) $(CFLAGS) -o connections $^
 
 main.o: main.c my_mat.h
 	$(CC) $(CFLAGS) -c main.c
