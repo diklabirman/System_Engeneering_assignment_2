@@ -10,7 +10,7 @@ all: $(TARGETS)
 
 
 connections: my_mat.o main.o my_mat.h
-	$(AR) -rcs connections $^
+	$(CC) -rcs connections $^
 
 main.o: main.c my_mat.h
 	$(CC) $(CFLAGS) -c main.c
