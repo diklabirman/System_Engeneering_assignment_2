@@ -1,48 +1,36 @@
 #include <stdio.h>
 #include "my_mat.h"
 
+int arr[size][size];
+int ans[size][size];
+
 
 int main()
 {
     char inp;
-    printf("Enter a letter:\n");
     scanf("%c", &inp);
 
-
-    // getValues(arr);
-    // for (int i = 0; i < size; i++)
-    // {
-    //     for (int j = 0; j < size; j++)
-    //     {
-    //         printf("%d\t", arr[i][j]);
-    //     }
-    //     printf("\n");
-    // }
-
-    int arr[size][size];
 
     while(inp != 'D')
     {
         if (inp == 'A')
         {
-            getValues(arr);
+            getValues();
         }
         int i;
         int j;
         if (inp == 'B')
         {
-            printf("Enter indexes of matrix as desired, separated by space: \n");
             scanf("%d %d", &i, &j);
-            pathExists(i, j, arr);
+            pathExists(i, j);
         }
         if (inp == 'C')
         {
-            printf("Enter indexes of matrix as desired, separated by space: \n");
             scanf("%d %d", &i, &j);
-            shortestPath(i, j, arr);
+            shortestPath(i, j);
         }
-        printf("Enter a letter: \n");
         scanf("%c", &inp);
     }
     return 0;
 }
+

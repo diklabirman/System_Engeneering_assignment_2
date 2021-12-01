@@ -1,19 +1,15 @@
 #include <stdio.h>
 #include "my_mat.h"
 
-#define size 10
-int arr[size][size];
-
-
 int getMin(int i, int j)
 {
     if (i < j) return i;
     else return j;
 }
 
-void getValues(int arr[][size])
+
+void getValues()
 {
-    printf("Enter values for array: \n");
     for(int i=0; i<size; i++)
     {
       for(int j=0; j<size; j++)
@@ -24,73 +20,64 @@ void getValues(int arr[][size])
 }
 
 
-void floydWarshallAlgo(int arr[][size])
+void floydWarshallAlgo()
 {
-    int prev[size][size];
-    for (int i = 0; i < size; i++) // deep copy of arr into prev for future work 
+    for (int s = 0; s < size; s++ )
     {
-        for (int j = 0; j < size; j++)
+        for (int t = 0; t < size; t++ )
         {
-            prev[i][j] = arr[i][j];
+            ans[s][t] = arr[s][t];
+            if ( s != t && arr[s][t] == 0)
+                ans[s][t] = MAX_VALUE;
         }
     }
 
-
-    int curr[size][size];
-
-    for (int i = 0; i < size; i++) // deep copy of previous into current for future work 
-    {
-        for (int j = 0; j < size; j++)
-        {
-            curr[i][j] = prev[i][j];
-        }
-    }
-
-    for (int k = 0; k < size; k ++) //Actual function
+    for (int k = 0; k < size; k++) //Actual function
     {
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
             {
-                curr[i][j] = getMin(prev[i][j], prev[i][k] + prev[k][j]);
-            }
-        }
-        
-        for (int i = 0; i < size; i++) //deep copy of current into previous for future work
-        {
-            for (int j = 0; j < size; j++)
-            {
-                prev[i][j] = curr[i][j];
+                ans[i][j] = getMin(ans[i][j], ans[i][k] + ans[k][j]);
             }
         }
     }
+ }
 
-    for (int i = 0; i < size; i++) // Updating arr to the new value
-    {
-        for (int j = 0; j < size; j++)
-        {
-            arr[i][j] = prev[i][j];
-        }
-    }
+
+void pathExists(int i, int j)
+{
+    floydWarshallAlgo();
+    if (ans[i][j] != MAX_VALUE && i != j)
+        printf("True\n");
+    else
+        printf("False\n");
 }
 
-void pathExists(int i, int j, int arr[][size])
-{
-    floydWarshallAlgo(arr);
-    if (arr[i][j] != 0) printf("True\n");
-    else printf("False\n");
-}
 
-void shortestPath(int i, int j, int arr[size][size])
+void shortestPath(int i, int j)
 {
-    floydWarshallAlgo(arr);
-    int temp = arr[i][j];
-    if (temp == 0) 
+    
+    floydWarshallAlgo();
+    int temp = ans[i][j];
+    if (temp == MAX_VALUE || i == j)
     {
         printf("-1\n");
     }
-    else 
+    else
     {
         printf("%d\n", temp);
     }
+}
+
+
+void printmat(int vec[size][size])
+{
+    for(int i = 0 ; i < size ; i++){
+        for(int j = 0 ; j < size ; j++){
+            printf("%2d ", vec[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
 }
